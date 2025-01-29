@@ -2,6 +2,7 @@ import yfinance as yf
 from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
+import csv
 
 # ### Inputs
 # shares = ["CRESY", "AAPL", "NVDA"] VET, MOH
@@ -10,7 +11,8 @@ import numpy as np
 # price_shares = [12.5, 229.0, 118.0]
 # confidence_level = 0.05
 # currency_shares = ["EUR", "USD", "EUR"]
-#TODO - Si no encuentra serie tener alguna precargadad desde Investing pro
+# TODO - Si no encuentra serie tener alguna precargadad desde Investing pro
+
 
 def calculate_var(
     shares,
@@ -57,7 +59,19 @@ def calculate_var(
     var_percentile = portfolio_return.quantile(confidence_level)
     var = abs(var_percentile * quintet_portfolio_value)
 
+    shares_info_csv = pd.DataFrame(
+        {
+            "Share": list(historical_return.columns),
+            "Number of shares": num_shares + [0],
+            "Price original ccy": shares_amount + [0],
+            "Price in EUR": shares_amount_fx,
+            "Weight": weights,
+            "Currency": currency_shares + [""],
+        }
+    )
+
     portfolio_return.to_excel("output/portfolio_return.xlsx")
     historical_return.to_excel("output/historical_return.xlsx")
+    shares_info_csv.to_excel("output/positions_info.xlsx")
 
     return var
