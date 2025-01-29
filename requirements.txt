@@ -1,0 +1,11 @@
+black==24.10.0
+numpy==2.2.2
+packaging==24.2
+pandas==2.2.3
+python-dateutil==2.9.0.post0
+pytz==2024.2
+requests==2.32.3
+six==1.17.0
+soupsieve==2.6
+tk==0.1.0
+yfinance==0.2.52
